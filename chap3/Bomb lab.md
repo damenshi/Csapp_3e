@@ -8,7 +8,8 @@ modified: '2022-06-03T15:36:46.046Z'
 
 # Bomb lab
 
-+ [实验说明](https://www.bilibili.com/video/BV1a54y1k7YE?p=11)
++ [实验说明-视频](https://www.bilibili.com/video/BV1a54y1k7YE?p=11)
++ [writeup](http://csapp.cs.cmu.edu/3e/bomblab.pdf)
 
 + objdump -t
   This will print out the bomb’s symbol table. The symbol table includes the names of all functions and global variables in the bomb, the names of all the functions the bomb calls, and their addresses. You may learn something by looking at the function names!

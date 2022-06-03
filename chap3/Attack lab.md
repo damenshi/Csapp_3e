@@ -8,8 +8,8 @@ modified: '2022-06-03T15:36:56.537Z'
 
 # Attack lab
  
- + [实验说明](https://www.bilibili.com/video/BV1a54y1k7YE?p=12)
-
+ + [实验说明-视频](https://www.bilibili.com/video/BV1a54y1k7YE?p=12)
+ + [writeup](http://csapp.cs.cmu.edu/3e/attacklab.pdf)
  + Code Injection Attacks
 
         vim foo.s
