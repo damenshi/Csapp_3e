@@ -9,7 +9,7 @@ modified: '2022-05-01T09:03:34.177Z'
 **《CSAPP》**
 + [B站课程视频地址](https://www.bilibili.com/video/BV1iW411d7hd?p=1)
 + [课件地址](http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/schedule.html)
-
++ [](https://fengmuzi2003.gitbook.io/csapp3e/)
 + **每章阅读三遍，写课后作业**
 + **完成实验**
 
