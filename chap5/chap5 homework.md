@@ -1,11 +1,3 @@
----
-attachments: [Clipboard_2022-06-08-14-40-38.png, Clipboard_2022-06-08-15-15-45.png, Clipboard_2022-06-08-15-30-04.png, Clipboard_2022-06-08-17-07-23.png]
-tags: [csapp/10]
-title: chap5 homework
-created: '2022-06-08T03:44:52.363Z'
-modified: '2022-06-09T01:42:16.226Z'
----
-
 # chap5 homework
 
 ### 5.13
@@ -106,7 +98,7 @@ B.关键路径上的加法操作没有减少。
     #include<assert.h>
     #include<string.h>
     #include<stdlib.h>
-
+    
     void *basic_memset(void *s, int c, size_t n){
         size_t cnt = 0;
         unsigned char *schar = s;
@@ -117,10 +109,10 @@ B.关键路径上的加法操作没有减少。
         }
         return s;
     }
-
+    
     void *effective_memset(void *s, unsigned long lc, size_t n){
         size_t K = sizeof(unsigned long);
-
+    
         //先用按字节填充，使地址向8对齐
         size_t cnt = 0;
         unsigned char *schar = s;
@@ -131,35 +123,35 @@ B.关键路径上的加法操作没有减少。
             *schar++ = (unsigned char) lc;
             cnt++;
         }
-
+    
         unsigned long *slong = (unsigned long *)schar;
         size_t rest = n - cnt; //剩余需要填充的字节数
         size_t loop = rest / K; //每次填充8个字节，需要的循环数
         size_t tail = rest % 8; //剩余需要按字节填充的循环数。
-
+    
         for(size_t i = 0; i < loop; i++){//每次填充8字节
             *slong++ = lc;
         }
-
+    
         schar = (unsigned char*) slong;
         for(size_t i = 0; i < tail; i++){//每次填充1字节
             *schar++ = (unsigned char) lc; 
         }
         return s;
     }
-
+    
     int main(){
         size_t space = sizeof(char) * 65537;
-
+    
         void* basic_s = malloc(space);
         void* effective_s = malloc(space);
-
+    
         int basic_fill = 0xff;
         unsigned long effect_fill = ~0;
-
+    
         basic_memset(basic_s, basic_fill, space);
         effective_memset(effective_s, effect_fill, space);
-
+    
         assert(memcmp(basic_s, effective_s,space) == 0);
         return 0;
     }
@@ -183,7 +175,7 @@ B.关键路径上的加法操作没有减少。
         double xpwr9 = xpwr8 * x;
         double xpwr10 = xpwr9 * x;
         double x10 = xpwr10;
-
+    
         double result1 = a[0], result2 = 0, result3 = 0, result4 = 0, result5 = 0, result6 = 0, result7 = 0, result8 = 0, result9 = 0,result10 = 0;
 
 
@@ -199,7 +191,7 @@ B.关键路径上的加法操作没有减少。
             result8 += a[i + 7] * xpwr8;
             result9 += a[i + 8] * xpwr9;
             result10 += a[i + 9] * xpwr10;
-
+    
             xpwr1 *= x10;
             xpwr2 *= x10;
             xpwr3 *= x10;
@@ -211,37 +203,37 @@ B.关键路径上的加法操作没有减少。
             xpwr9 *= x10;
             xpwr10 *= x10;
         }
-
+    
         for( ; i <= degree; i++){
             result1 += a[i] * xptr1;
             xpwr1 *= x;
         }
         result1 += (result2 + result3 + result4 + result5 + result6 + result7  + result8  + result9 + result10);
         return result1;
-
+    
     }
-
+    
     //参考2
     double poly6_3a(double a[], double x, long degree){
         long i;
         double result1 = a[0];
         double result2 = 0, result3 = 0;
-
+    
         double xpwr1 = x;
         double xpwr2 = x * x * x;
         double xpwr3 = x * x * x * x * x;
         double x6 = xpwr3 * x;
-
+    
         for(i = 1; i <= degree - 5; i +=6){
             result1 = result1 + (a[i] * xpwr1 + a[i + 1] * xpwr1 * x);
             result2 = result2 + (a[i + 2]) * xpwr2 + a[i + 3] * xpwr2 * x);
             result3 = result3 + (a[i + 4]) * xpwr3 + a[i + 5] * xpwr3 * x);
-
+    
             xpwr1 *= x6;
             xpwr2 *= x6;
             xpwr3 *= x6;
         }
-
+    
         for( ; i <= degree; i++){
             result1 += a[i] * xpwr1;
             xpwr1 *= x;
@@ -269,14 +261,13 @@ B.关键路径上的加法操作没有减少。
             p[i + 1] = temp2;
             p[i + 2] = temp3;
             p[i + 3] = temp4;
-
+        
             temp1 = temp4;
         }
-
+        
         for( ; i < n; i++){
             temp1 += a[i];
             p[i] = temp1;
         }
     }
-
 

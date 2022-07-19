@@ -1,18 +1,10 @@
----
-attachments: [Clipboard_2022-05-08-10-59-01.png, Clipboard_2022-05-08-11-20-03.png]
-tags: [操作系统/02-03]
-title: Chapter2 homework
-created: '2022-05-05T08:36:25.440Z'
-modified: '2022-05-13T12:09:29.549Z'
----
-
 # <CSAPP>Chapter2 homework
 
 ### 2.55
 
     #include <stdio.h>
     typedef unsigned char* byte_pointer;
-
+    
     void show_bytes(byte_pointer start, size_t len) {
       size_t i;
       for (i = 0; i < len; i++) {
@@ -20,41 +12,41 @@ modified: '2022-05-13T12:09:29.549Z'
       }
       printf("\n");
     }
-
+    
     void show_int(int x) {
       show_bytes((byte_pointer) &x, sizeof(int));
     }
-
+    
     void show_float(float x) {
       show_bytes((byte_pointer) &x, sizeof(float));
     }
-
+    
     void show_pointer(void* x) {
       show_bytes((byte_pointer) &x, sizeof(void*));
     }
-
+    
     void test_show_bytes(int val) {
       int ival = val;
       float fval = (float) ival;
       int* pval = &ival;
-
+    
       show_int(ival);
       show_float(fval);
       show_pointer(pval);
     }
-
+    
     int main(int argc, char* argv[]) {
       int test_num = 1024;
-
+    
       test_show_bytes(test_num);
       return 0;
     }
 
 ### 2.57
     #include <stdio.h>
-
+    
     typedef unsigned char* byte_pointer;
-
+    
     void show_bytes(byte_pointer start, size_t len) {
       size_t i;
       for (i = 0; i < len; i++) {
@@ -62,31 +54,31 @@ modified: '2022-05-13T12:09:29.549Z'
       }
       printf("\n");
     }
-
+    
     void show_int(int x) {
       show_bytes((byte_pointer) &x, sizeof(int));
     }
-
+    
     void show_float(float x) {
       show_bytes((byte_pointer) &x, sizeof(float));
     }
-
+    
     void show_pointer(void* x) {
       show_bytes((byte_pointer) &x, sizeof(void*));
     }
-
+    
     void show_short(short x){
         show_bytes((byte_pointer) &x, sizeof(short));
     }
-
+    
     void show_long(long x){
         show_bytes((byte_pointer) &x, sizeof(long));
     }
-
+    
     void show_double(double x){
         show_bytes((byte_pointer) &x, sizeof(double));
     }
-
+    
     void test_show_bytes(int val) {
       int ival = val;
       float fval = (float) ival;
@@ -94,7 +86,7 @@ modified: '2022-05-13T12:09:29.549Z'
       short sval = (short) ival;
       short lval = (long) ival;
       short dval = (double) ival;
-
+    
       show_int(ival);
       show_float(fval);
       show_pointer(pval);
@@ -102,10 +94,10 @@ modified: '2022-05-13T12:09:29.549Z'
       show_long(lval);
       show_double(dval);
     }
-
+    
     int main(int argc, char* argv[]) {
       int test_num = 1024;
-
+    
       test_show_bytes(test_num);
       return 0;
     }
@@ -115,7 +107,7 @@ modified: '2022-05-13T12:09:29.549Z'
     #include <stdio.h>
     #include <assert.h>
     typedef unsigned char* byte_pointer;
-
+    
     int is_little_endian(){
         int test_num = 0xff;
         byte_pointer start = (byte_pointer) &test_num;
@@ -146,13 +138,13 @@ modified: '2022-05-13T12:09:29.549Z'
     #include<stdio.h>
     #include<assert.h>
     typedef unsigned char * byte_pointer; 
-
+    
     unsigned replace_byte(unsigned x, int i, unsigned char b){
         byte_pointer start = (byte_pointer) &x;
         start[i] = b;
         return x;
     }
-
+    
     int main(){
         unsigned test_num = 0x12345678;
         unsigned char replace = 0xAB;
@@ -176,28 +168,28 @@ D.!((x>>(sizeof(int)-1 << 3)) & 0xff)
     int A(int x){
         return !~x;
     }
-
+    
     int B(int x){
         return !x;
     }
-
+    
     int C(int x){
         return !(~x & 0xff);
     }
-
+    
     int D(int x){
         return !((x >> ((sizeof(int) - 1) << 3)) & 0xff);
     }
-
+    
     int main(){
         int all_one = ~0;
         int all_zero = 0;
-
+    
         assert(A(all_one));
         assert(B(all_zero));
         assert(C(all_one));
         assert(D(all_zero));
-
+    
         return 0;
     }
 
@@ -209,7 +201,7 @@ D.!((x>>(sizeof(int)-1 << 3)) & 0xff)
         int num = -1;
         return !(num ^ (num >> 1));
     }
-
+    
     int main(){
         assert(int_shifts_are_arithmetic());
         return 0;
@@ -220,7 +212,7 @@ D.!((x>>(sizeof(int)-1 << 3)) & 0xff)
     #include <stdio.h>
     #include <assert.h>
     #include <limits.h>
-
+    
     unsigned srl(unsigned x, int k){
         unsigned xrsa = (int) x >> k;
         int w = sizeof(int) << 3;
@@ -228,7 +220,7 @@ D.!((x>>(sizeof(int)-1 << 3)) & 0xff)
       
         return xrsa & ~mask;
     }
-
+    
     //x>0,算数右移，左边填0. x < 0,算数右移，左边填1.
     //当x>0时，使mask前k位为0，当x < 0时， 使mask前k位为1.
     int sra(int x, int k){
@@ -243,17 +235,17 @@ D.!((x>>(sizeof(int)-1 << 3)) & 0xff)
         //总结：当x>=0时，mask为0，当x<0时，mask保持不变。
         return mask | xrsl; 
     }
-
+    
     int main(){
         unsigned test_unsigned = 0x12345678;
         int test_int = 0x12345678;
-
+    
         assert(srl(test_unsigned, 4) == test_unsigned >> 4);
         assert(sra(test_int, 4) == test_int >> 4);
-
+    
         test_unsigned = 0x87654321;
       test_int = 0x87654321;
-
+    
       assert (srl (test_unsigned, 4) == test_unsigned >> 4);
       assert (sra (test_int, 4) == test_int >> 4);
     }
@@ -263,11 +255,11 @@ x任意奇数位为1，返回1，否则返回0
 
     #include <stdio.h>
     #include <assert.h>
-
+    
     int any_odd_one(unsigned x){
         return !!(0xAAAAAAAA & x);
     }
-
+    
     int main(){
         assert(any_odd_one(0x02));
         assert(!any_odd_one(0x05));
@@ -297,7 +289,7 @@ int main(){
 
     #include <stdio.h>
     #include <assert.h>
-
+    
     int leftmost_one(unsigned x){
         //先将最左边的1右边的位全部变成1，0xff00->0xffff, 0x6600->0x7fff;
         x |= x >> 1;
@@ -307,7 +299,7 @@ int main(){
         x |= x >> 16;
         return (x >> 1) + (x & 1);//x = 0, return 0.
     }
-
+    
     int main(){
         assert(leftmost_one(0xff00) == 0x8000);
         assert(leftmost_one(0x6600) == 0x4000);
@@ -326,7 +318,7 @@ B.
         int beyond_msb = set_msb << 1;
         return set_msb && !beyond_msb;
     }
-
+    
     int main(){
         assert(bad_int_size_is_32());
         return 0;
@@ -338,10 +330,10 @@ C.
     int bad_int_size_is_32_16(){
         int set_msb = 1 << 15 << 15 << 1;//不会溢出，可以在int为16位的机器上运行。
         int beyond_msb = set_msb << 1;
-
+    
         return set_msb && !beyond_msb;
     }
-
+    
     int main(){
         assert(bad_int_size_is_32());
         assert(bad_int_size_is_32_16());//int为32位返回1，否则返回0.
@@ -352,12 +344,12 @@ C.
 
     #include <stdio.h>
     #include <assert.h>
-
+    
     int lower_one_mask(int n){
         int w = sizeof(int) << 3;
         return (unsigned)-1 >> (w - n);
     }
-
+    
     int main(){
         assert(lower_one_mask(6) == 0x3f);
         assert(lower_one_mask(17) == 0x1ffff);
@@ -368,12 +360,12 @@ C.
     #include <stdio.h>
     #include <assert.h>
     #include <limits.h>
-
+    
     unsigned rotate_left(unsigned x, int n){
         int w = sizeof(int) << 3;
         return x << w | x >> (w - n - 1) >> 1;//防止n=0时，溢出
     }
-
+    
     int main(){
         unsigned res = rotate_left(0x12345678, 0);
         printf("%x\n", res);
@@ -388,7 +380,7 @@ C.
         int w = sizeof(int) << 3;
         return x << (w - n) >> (w - n) == x;
     }
-
+    
     int main(){
         assert(fit_bits(16, 6));
         return 0;
@@ -400,11 +392,11 @@ B.
     #include <stdio.h>
 
     typedef unsigned packed_t;
-
+    
     int xbyte(packed_t word, int bytenum){
         return (int) word << ((3 - bytenum) << 3) >> (3 << 3);
     }
-
+    
     int main(){
         int res = xbyte(0x112233ff, 0);
         printf("%x\n", res);
@@ -422,19 +414,19 @@ B.判断条件改为if(maxbytes - (int)sizeof(val) >= 0)
         if(maxbytes - (int)sizeof(val) >= 0)
             memcpy(buf, (void*) &val, sizeof(val));
     }
-
+    
     int main(){
         int maxbytes = sizeof(int) * 10;
         void* buf = malloc(maxbytes);
-
+    
         int test_num = 0xffffffff;
         copy_int(test_num, buf, maxbytes);
         assert(*(int*)buf == test_num);
-
+    
         test_num = 0x12345678;
         copy_int(test_num, buf, 0);
         assert(*(int*)buf != test_num);
-
+    
         return 0;
     }
 
@@ -446,17 +438,17 @@ B.判断条件改为if(maxbytes - (int)sizeof(val) >= 0)
     int saturating_add(int x, int y){
         int sum = x + y;
         int sign_mask = INT_MIN;
-
+    
         // x > 0, y > 0, sum < 0, 正溢出
         // x < 0, y < 0, sum > 0, 负溢出
         int pos_over = !(x & sign_mask) && !(y & sign_mask) && (sum & sign_mask);
         int neg_over = (x & sign_mask) && (y & sign_mask) && !(sum & sign_mask);
-
+    
         (pos_over && (sum = INT_MAX) || neg_over && (sum = INT_MIN));
-
+    
         return sum;
     }
-
+    
     int main(){
         int x = 0x7fffffff;
         int y = 0x7fffffff;
@@ -474,23 +466,23 @@ B.判断条件改为if(maxbytes - (int)sizeof(val) >= 0)
     #include <stdio.h>
     #include <assert.h>
     #include <limits.h>
-
+    
     int tsub_ok(int x, int y){
         int diff = x - y;
         int sign_mask = INT_MIN;
-
+    
         // x > 0, y < 0, diff < 0, pos_over
         // x < 0, y > 0, diff > 0, neg_over
         int pos_over = !(x & sign_mask) && (y & sign_mask) && (diff & sign_mask);
         int neg_over = (x &sign_mask) && !(y & sign_mask) && !(diff & sign_mask);
-
+    
         return !(pos_over || neg_over);
     }
-
+    
     int main(){
         int x = 0xffff;
         int y = INT_MIN;
-
+    
         assert(!tsub_ok(x, y));
 }
 
@@ -509,18 +501,18 @@ B.判断条件改为if(maxbytes - (int)sizeof(val) >= 0)
         int64_t mul = (int64_t) x * y;
         return mul >> 32; 
     }
-
+    
     unsigned unsigned_high_prod(unsigned x, unsigned y){  
         int x_sign = x >> 31;
         int y_sign = y >> 31;
         return signed_high_prod(x, y) + x * y_sign + y * x_sign;
     }
-
+    
     unsigned another_unsigned_high_prod(unsigned x, unsigned y){
         u_int64_t mul = (u_int64_t) x * y;
         return mul >> 32;
     }//该函数用来验证unsigned_high_prod的正确性
-
+    
     int main(){
         unsigned x = 0x12345678;
         unsigned y = 0xffffffff;
@@ -535,7 +527,7 @@ B.判断条件改为if(maxbytes - (int)sizeof(val) >= 0)
     #include <string.h>
     #include <stdint.h>
     #include <stdlib.h>
-
+    
     void* calloc(size_t nmemb, size_t size){
         if(nmemb == 0 || size == 0)
             return NULL;
@@ -548,13 +540,13 @@ B.判断条件改为if(maxbytes - (int)sizeof(val) >= 0)
         }
         return NULL;
     }
-
+    
     int main(){
         void *p;
         p = calloc(0x1234, 1);
         assert(p != NULL);
         free(p);
-
+    
         p = calloc(SIZE_MAX, 2);
         assert(p == NULL);
         free(p);
@@ -563,7 +555,7 @@ B.判断条件改为if(maxbytes - (int)sizeof(val) >= 0)
 
 ### 2.77
     #include <stdio.h>
-
+    
     int main(){
         int x = 10;
         //A k = 17.
@@ -587,7 +579,7 @@ B.判断条件改为if(maxbytes - (int)sizeof(val) >= 0)
 
     #include <stdio.h>
     #include <limits.h>
-
+    
     //直接右移，负数会向下舍入,(-7 >> 1 = -4),而C语言整数除法向0舍入(-7/2 = -3)。
     //x/2^k
     int divide_power2(int x, int k){
@@ -596,16 +588,16 @@ B.判断条件改为if(maxbytes - (int)sizeof(val) >= 0)
         (x_sig && (x = x + (1 << k) - 1));
         return x >> k;
     }
-
+    
     int main(){
         int x = -7;
         int res = divide_power2(x, 1);
         printf("%d\n", res);
-
+    
         x = 7;
         res = divide_power2(x, 1);
         printf("%d\n", res);
-
+    
         return 0;
     }
 
@@ -615,7 +607,7 @@ B.判断条件改为if(maxbytes - (int)sizeof(val) >= 0)
     #include <stdio.h>
     #include <limits.h>
     #include <assert.h>
-
+    
     int mul3div4(int x){
         x = (x << 1)+ x;
         int sig_mask = INT_MIN;
@@ -623,7 +615,7 @@ B.判断条件改为if(maxbytes - (int)sizeof(val) >= 0)
         (x_sig && (x = x + (1 << 2) - 1));
         return x >> 2;
     }
-
+    
     int main(){
         int x = 0x87654321;
         assert(mul3div4(x) == x*3/4);
@@ -635,7 +627,7 @@ B.判断条件改为if(maxbytes - (int)sizeof(val) >= 0)
     #include <stdio.h>
     #include <assert.h>
     #include <limits.h>
-
+    
     //3/4x,向0舍入，不会溢出。先计算除法，再计算乘法。但10*3/4 = 7, 10/4 * 3 = 6.
     //采用一个巧妙方法，将x进行拆分
     int threefourths(int x){
@@ -646,24 +638,24 @@ B.判断条件改为if(maxbytes - (int)sizeof(val) >= 0)
         int f = x & ~0x3;//取x前30位
         int l = x & 0x3;//取x后两位
         //x = f + l
-
+    
         int fd4 = f >> 2;
         int fd4m3 = (fd4 << 1) + fd4;//f没有舍入问题
-
+    
         int lm3 = (l << 1) + l;
         (x_sig && (lm3 = lm3 + bias));
         int lm3d4 = lm3 >> 2;
-
+    
         return fd4m3 + lm3d4;
     }
-
+    
     int main(){
       assert(threefourths(8) == 6);
       assert(threefourths(9) == 6);
       assert(threefourths(10) == 7);
       assert(threefourths(11) == 8);
       assert(threefourths(12) == 9);
-
+    
       assert(threefourths(-8) == -6);
       assert(threefourths(-9) == -6);
       assert(threefourths(-10) == -7);
@@ -683,7 +675,7 @@ B. ~(-1 << k) << j
         //A
         int x = -1 << k;
         printf("%x\n", x);
-
+    
         int j = 5;
         //B
         x = ~(-1 << k) << j;
@@ -718,26 +710,26 @@ B.
     unsigned f2u(float x){
         return *(unsigned*)&x;
     }
-
+    
     int float_le(float x, float y){
         unsigned ux = f2u(x);
         unsigned uy = f2u(y);
-
+    
         unsigned sx = ux >> 31;
         unsigned sy = uy >> 31;
-
+    
         return (ux << 1 == 0 && uy << 1 == 0) /*x = 0 && y = 0*/
         || (sx && !sy)  /*sx < 0, sy > 0*/
         || (!sx && !sy && ux <= uy) /* x >=0 , y > 0 or x > =0 , y >= 0*/
         || (sx && sy && ux >= uy);/*x <= 0, y < 0 or x < 0, y <= 0*/
     }
-
+    
     int main(){
         
         assert(float_le(1.0, 2.0));
         assert(float_le(+0, -0));
         assert(float_le(-2.0, -1.0));
-
+    
         return 0;
     }
 
@@ -799,36 +791,36 @@ E.F dx != 0, dz = 0.
     #include <assert.h>
     #include <stdlib.h>
     #include <limits.h>
-
+    
     int A(int x, double dx){
         return (float)x == (float)dx;
     }
-
+    
     int B(int x, int y, double dx, double dy){
         return dx - dy == (double)(x - y);
     }
-
+    
     int C(double dx, double dy, double dz){
         return (dx + dy) + dz == dx + (dy + dz);
     }
-
+    
     int D(double dx, double dy, double dz){
         return (dx * dy) * dz == dx * (dy * dz);
     }
-
+    
     int E(double dx, double dz){
         return dx/dx == dz/dz;
     }
-
+    
     int main(){
         int x = random();
         int y = random();
         int z = random();
-
+    
         double dx = (double) x;
         double dy = (double) y;
         double dz = (double) z;
-
+    
         //A
         assert(A(x, dx));
         //B
@@ -847,15 +839,15 @@ E.F dx != 0, dz = 0.
     #include <stdio.h>
     #include <assert.h>
     #include <math.h>
-
+    
     float u2f(unsigned u){
         return *(float*)&u;
     }
-
+    
     float fpwr2(int x){
         unsigned exp, frac;
         unsigned u;
-
+    
         if(x < -149){
             exp = 0;
             frac = 0;
@@ -869,11 +861,11 @@ E.F dx != 0, dz = 0.
             exp = 0xff;
             frac = 0;
         }
-
+    
         u = exp << 23 | frac;
         return u2f(u);
     }
-
+    
     int main(){
         assert(fpwr2(-150) == powf(2, -150));
         assert(fpwr2(-127) == powf(2, -127));
@@ -895,7 +887,7 @@ C. 第九位
     #include <stdio.h>
     #include <assert.h>
     typedef unsigned float_bits;
-
+    
     float_bits float_negate(float_bits f){
         unsigned sign = f >> 31;
         unsigned exp = f >> 23 & 0xff;
@@ -905,7 +897,7 @@ C. 第九位
             return f;
         return (~sign << 31) | (exp << 23) | frac;
     }
-
+    
     int main(){
         float_bits x = 0x87654321;
         float_bits y = float_negate(x);
@@ -918,7 +910,7 @@ C. 第九位
     #include <stdio.h>
     #include <assert.h>
     typedef unsigned float_bits;
-
+    
     float_bits float_absval(float_bits f){
         unsigned sign = f >> 31;
         unsigned exp = f >> 23 & 0xff;
@@ -934,7 +926,7 @@ C. 第九位
     #include <stdio.h>
     #include <assert.h>
     typedef unsigned float_bits;
-
+    
     float_bits float_twice(float_bits f){
         unsigned sign = f >> 31;
         unsigned exp = f >> 23 & 0xff;
@@ -960,13 +952,13 @@ C. 第九位
     #include <stdio.h>
     #include <assert.h>
     typedef unsigned float_bits;
-
+    
     float_bits float_half(float_bits f){
         unsigned sign = f >> 31;
         unsigned exp = f >> 23 & 0xff;
         unsigned frac = f & 0x7fffff;
         unsigned rest = f & 0x7fffffff;
-
+    
         if(exp == 0xff && frac != 0)
             return f;
         /*
@@ -977,7 +969,7 @@ C. 第九位
             11 -> 2 (右移 + 1)
         */
         unsigned add = ((f & 0x3) == 0x3); //当后两位为11时，需要加1
-
+    
         if(exp == 0){//非规格化
             frac >>= 1;
             frac += add;    
@@ -999,17 +991,17 @@ C. 第九位
     #include <assert.h>
     #include <math.h>
     typedef unsigned float_bits;
-
+    
     int float_f2i(float_bits f){
         unsigned sign = f >> 31;
         unsigned exp = f >> 23 & 0xff;
         unsigned frac = f & 0x7fffff;
         unsigned bias = 0x7f;
-
+    
         int num;
         unsigned E;
         unsigned M;
-
+    
         if(exp >= 0 && exp < bias){//小于1的数,转换为int为0.
             num = 0;
         }else if(exp >= 31 + bias){//overflow，大于等于2^31 or 小于等于-2^31.
@@ -1033,9 +1025,9 @@ C. 第九位
     #include <assert.h>
     #include <math.h>
     #include <limits.h>
-
+    
     typedef unsigned float_bits;
-
+    
     //i > 0, 计算i的bit长度，例如 i = 7， bits_length(7) = 3. i = 0x80ff,  bits_length(i) = 16.
     int bits_length(int i){
         if((i & INT_MIN) != 0){//防止while陷入死循环。
@@ -1048,7 +1040,7 @@ C. 第九位
         }
         return length;
     }
-
+    
     /*
     3  => 0x00000007
     16 => 0x0000FFFF
@@ -1056,11 +1048,11 @@ C. 第九位
     unsigned bits_mask(int l){
         return (unsigned)-1 >> (32 - l);
     }
-
+    
     float_bits float_i2f(int i){
         unsigned sign, exp, frac, bits, fbits, rest;
         unsigned bias = 0x7f;
-
+    
         if(i == 0){
             sign = 0;
             exp = 0;
@@ -1073,25 +1065,25 @@ C. 第九位
             frac = 0;
             return (sign << 31) | (exp << 23) || frac;
         }
-
+    
         sign = 0;
         if(i < 0){
             sign = 1;
             i = -i;
         }
-
+    
         bits = bits_length(i);//i的二进制表示，最左边1到最右边的长度。
         fbits = bits - 1;//规格化数暗含1, E = fbits 
         exp = fbits + bias;// E = exp - bias
         rest = i & bits_mask(fbits);//取i的后fbits位
-
+    
         if(fbits <= 23){//不需要舍入。
             frac = rest << (23 - fbits);//将rest中第一个1移到后23位中的第一个位置。
         }else{//需要向偶数舍入，offset为要舍去的位，当要舍去的部分为100..形式时进行判断。
             int offset = fbits - 23;
             int round_mid = 1 << (offset - 1);
             frac = rest >> offset;
-
+    
             unsigned round_part = rest & bits_mask(offset);//该部分为要舍入的部分
             if(round_part == round_mid){
                 if((frac & 0x1) == 1){//frac末位为1，则加1，为0，则不变。
@@ -1101,7 +1093,7 @@ C. 第九位
                 frac += 1;
             }
         }
-
+    
         return (sign << 31) | (exp << 23) || frac;
     }
 

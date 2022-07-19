@@ -1,10 +1,3 @@
----
-tags: [操作系统/01]
-title: M1 mac 配置Docker搭建csapp实验环境
-created: '2022-05-13T01:53:36.784Z'
-modified: '2022-05-13T04:26:52.564Z'
----
-
 # M1 mac 配置Docker搭建csapp实验环境
 
 ### 1.安装docker
@@ -30,7 +23,7 @@ modified: '2022-05-13T04:26:52.564Z'
         apt-get install sudo
 
 3. 安装c/c++编译环境
-  build-essential软件包列表内包含libc6-dev、libc-dev、gcc、g++、make、dpkg等。
+    build-essential软件包列表内包含libc6-dev、libc-dev、gcc、g++、make、dpkg等。
 
         sudo apt-get install build-essential
 
@@ -59,7 +52,7 @@ modified: '2022-05-13T04:26:52.564Z'
         CTRL+D或者使用exit命令即可从容器中退出
 
 4. 停止容器
-当不需要进行实验时使用kill命令终止实例的运行并释放系统资源
+   当不需要进行实验时使用kill命令终止实例的运行并释放系统资源
 
         docker container kill csapp_env
 

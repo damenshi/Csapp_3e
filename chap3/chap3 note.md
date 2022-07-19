@@ -1,10 +1,3 @@
----
-tags: [csapp/05-09]
-title: chap3 note
-created: '2022-05-15T11:18:45.345Z'
-modified: '2022-06-03T15:36:26.014Z'
----
-
 # chap3 note
 [B站课程视频地址](https://www.bilibili.com/video/BV1iW411d7hd?p=5)
 
@@ -77,7 +70,7 @@ modified: '2022-06-03T15:36:26.014Z'
         long x = *xp;
         long y = *yp;
         long z = *zp;
-
+    
         *yp = x;
         *zp = y;
         *xp = z;
@@ -156,7 +149,7 @@ D. data_t(int) TEST(!=)
    data_t(unsigned int) TEST(!=)
 
 #### 3.15
- 
+
 A. 4003fe
 B. 400425
 C. ja:400543 pop: 400545
@@ -223,7 +216,7 @@ B.
     testq %rdi, %rdi    //test x
     cmovns %rdi, %rax   //if x >= 0, temp = x
     sarq $3, %rax       // result = temp >> 3
-  
+
 #### 3.21
     long test(long x, long y){
       long val = 8x;
@@ -371,7 +364,7 @@ A.
   由第2行，编译器先将x+1，说明源程序中标号最小为-1，
   第3行，x+1 和 8比较，大于8则跳到默认分支，所以源程序中最大标号为7.
   由第4行，ja .L2可知 .L2为默认分支。
-  
+
   跳转表第6行，直接跳转.L2,说明该源程序中没有该标号(3).
   标号分别为 -1，0， 1， 2， 4， 5， 7.
 B. 标号为0， 7, 都跳转到.L5.
@@ -389,7 +382,7 @@ B. 标号为0， 7, 都跳转到.L5.
   7    .quad     .L7    //case 5
   8    .quad     .L2    //case 6 default
   9    .quad     .L5    //case 7 
- 
+
 根据汇编代码第2行， cmpq  $7, %rdi 可知源代码标号为 0 ～ 7
 根据汇编代码第3行， ja  .L2 可知 .L2为默认分支。
 标号1， 3， 6 都跳到default，说明源码没有这三个标号。
@@ -461,7 +454,7 @@ C. 因为被调用者保存寄存器只有6个，为%rbx， %rbp， %r12~%r15,�
       long rv = rfun(nx);
       return x + rv;
     }
-
+    
     1 rfun
     2   pushq   %rbx          保存被调用者保存寄存器
     3   movq    %rdi, %rbx    save first argument
@@ -523,7 +516,7 @@ int *Bend = &B[N][k] = Xb + 4(16*16 + k) = Xb + 1024 + 4k.
     6     cmpq $1088, %rax          // cmp 
     7     jne  .L13                 // !=
     8     rep; ret
-
+    
     void fix_set_diag_opt(fix_matrix A, int val){
         int *Abase = &A[0][0];
         long i = 0;
@@ -570,7 +563,7 @@ C.
     8      testq %rdi, %rdi    // test ptr
     9      jne  .L3            // !=
     10     rep; ret
-
+    
     long func(struct ELE *ptr){
         long result = 0;
         while(ptr){
@@ -738,7 +731,7 @@ val1:d, val2:i, val3:l, val4:f.
     double funct1(arg1_t p(%edi), arg2_t q, arg3_t r, arg4_t s(%xmm1)){
         return p/(q + r) - s;
     }
-
+    
     1   funct1:
     2     vcvtsi2ssq  %rsi, %xmm2, %xmm2    // qword convert to float
     3     vaddss      %xmm0, %xmm2, %xmm0   // q + r
@@ -766,7 +759,7 @@ arg1_t : int, arg2_t : long, arg3_t: float, arg4_t: double
     7     vdivsd      %xmm1, %xmm0, %xmm0// w / z
     8     vsubsd      %xmm0, %xmm2, %xmm0//x*y - w / z 
     9     ret
-
+    
     double funct2(double w, int x, float y, long z){
         return x * y - w / z;
     }
@@ -841,7 +834,6 @@ double funct3(int *ap, double b, long c, float *dp){
     }
     
 }
-
 
 
 

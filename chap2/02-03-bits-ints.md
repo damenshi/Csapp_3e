@@ -1,10 +1,3 @@
----
-tags: [操作系统/02-03]
-title: 02-03-bits-ints
-created: '2022-04-26T09:21:29.173Z'
-modified: '2022-05-10T11:44:49.127Z'
----
-
 # 02-03-bits-ints
 [B站课程视频地址](https://www.bilibili.com/video/BV1iW411d7hd?p=2)
 

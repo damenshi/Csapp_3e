@@ -1,10 +1,3 @@
----
-tags: [操作系统/01]
-title: 01-overview
-created: '2022-04-21T16:09:29.268Z'
-modified: '2022-05-01T09:03:34.177Z'
----
-
 # 01-overview
 **《CSAPP》**
 + [B站课程视频地址](https://www.bilibili.com/video/BV1iW411d7hd?p=1)

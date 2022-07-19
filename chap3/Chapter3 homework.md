@@ -1,11 +1,3 @@
----
-attachments: [Clipboard_2022-05-24-23-26-34.png, Clipboard_2022-05-24-23-30-03.png, Clipboard_2022-05-24-23-30-25.png, Clipboard_2022-05-24-23-30-34.png, Clipboard_2022-05-24-23-30-59.png, Clipboard_2022-05-26-10-23-18.png, Clipboard_2022-05-26-10-23-46.png, Clipboard_2022-05-26-10-56-13.png, Clipboard_2022-05-26-17-32-02.png]
-tags: [csapp/05-09]
-title: Chapter3 homework
-created: '2022-05-24T14:01:26.349Z'
-modified: '2022-06-03T15:36:36.117Z'
----
-
 # Chapter3 homework
 
 ### 3.58
@@ -19,7 +11,7 @@ x in %rdi, y in %rsi, z in %rdx
     6     sarq   $63,  %rax   // y >>= 63
     7     xorq   %rdi, %rax   // y ^= x
     8     ret
-
+    
     long decode2(long x, long y, long z){
         y -= z;
         x *= y;
@@ -28,7 +20,7 @@ x in %rdi, y in %rsi, z in %rdx
         y ^= x;
         return y;
     }
-
+    
     参考：
     long decode2(long x, long y, long z){
         y -= z;
@@ -50,7 +42,7 @@ multiple
         *dest = x * (int128_t) y;
     }
     *dest in %rdi, x in %rsi, y in %rdx
-
+    
     x63 表示x的第63位， y63 表示x的第63位，
     1  store_prod:
     2     movq    %rdx, %rax    // %rax = y
@@ -108,7 +100,7 @@ E. result |= (x & mask)
     long cread_alt(long *xp){
         return (!xp ? 0 : *xp);
     }
-
+    
     cread_alt:
         movl  $0, %eax
         testq %rdi, %rdi
@@ -117,7 +109,7 @@ E. result |= (x & mask)
 
 ### 3.62
     typedef enum {MODE_A, MODE_B, MODE_C, MODE_D, MODE_E} mode_t;
-
+    
     long switch3(long *p1, long *p2, mode_t action){
         long result = 0;
         switch(action){
@@ -146,7 +138,7 @@ E. result |= (x & mask)
         }
         return result;
     }
-
+    
     1   .L8: MODE_E
     2     movl  $27, %eax       //%eax = 27
     3     ret
@@ -194,7 +186,7 @@ E. result |= (x & mask)
         }
         return result;
     }
-
+    
     1  switch_prob
     2   sub   $0x3c, %rsi               //%rsi = n - 60  
     3   cmp   $0x5, %rsi                //cmp n-60 5  
@@ -283,7 +275,7 @@ C. M = 120 / 8 = 15.
     18  .L4:
     19    movl  $0, %eax                //%eax = 0
     10    ret
-
+    
     NC(n) = 4*n + 1
     NR(n) = 3*n
 
@@ -352,7 +344,7 @@ q->u的地址为q + 32，short s[A]的地址空间为q + 12 ～ q + 32，最多�
 ### 3.69
 
     void test(long i, b_struct *bp)
-
+    
     1   test:
     2     mov   0x120(%rsi), %ecx         //%ecx = *(bp + 288)
     //bp->last = *(bp + 288)
@@ -406,7 +398,7 @@ void proc(union ele *up){
 ### 3.71
     #include <stdio.h>
     #define BUF_SIZE 12
-
+    
     void good_echo(){
         char buf[BUF_SIZE];
         while(1){
@@ -417,7 +409,7 @@ void proc(union ele *up){
         }
         return;
     }
-
+    
     int main(){
         good_echo();
         return 0;
@@ -427,7 +419,7 @@ void proc(union ele *up){
 
 + [参考](https://github.com/aQuaYi/CSAPP3E/blob/master/homework/03/3.72.md):详细推导过程
 + 栈帧结构
-![](@attachment/Clipboard_2022-05-26-17-32-02.png)
+  ![](@attachment/Clipboard_2022-05-26-17-32-02.png)
 
     1   aframe
     2     pushq   %rbp                  //store %rbp
@@ -554,9 +546,9 @@ asm("movl %ecx, %eax"); /* 把 ecx 内容移动到 eax */ __asm__("movb %bh , (%
 
     #include <stdio.h>
     #include <assert.h>
-
+    
     typedef enum {NEG, ZERO, POS, OTHER} range_t;
-
+    
     range_t find_range(float x){
         __asm__(
             "vxorps %xmm1, %xmm1, %xmm1\n\t" // %xmm1 = 0
@@ -564,7 +556,7 @@ asm("movl %ecx, %eax"); /* 把 ecx 内容移动到 eax */ __asm__("movb %bh , (%
             "movq $0, %r8\n\t"
             "movq $2, %r9\n\t"
             "movq $3, %r10\n\t"
-
+    
             "vucomiss %xmm1, %xmm0\n\t" //cmp x  0
             
             "cmovpq %r10, %rax\n\t" // x == Nan
@@ -572,7 +564,7 @@ asm("movl %ecx, %eax"); /* 把 ecx 内容移动到 eax */ __asm__("movb %bh , (%
             "cmovaq %r9, %rax\n\t" // x > 0
         );  
     }
-
+    
     int main(){
         range_t n = NEG, z = ZERO, p = POS, o = OTHER;
         assert(find_range(0.0/0.0) == o);
@@ -595,7 +587,6 @@ B.
 %xmm0保存实部，%xmm1保存虚部。
 
 22.05.27
-
 
 
 

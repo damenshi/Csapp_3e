@@ -1,10 +1,3 @@
----
-tags: [操作系统/02-03]
-title: datalab
-created: '2022-05-11T08:02:32.901Z'
-modified: '2022-05-13T12:32:37.751Z'
----
-
 # datalab
 
 > Use the dlc compiler (./dlc) to automatically check your version of bits.c for compliance with the coding guidelines:
@@ -15,7 +8,7 @@ modified: '2022-05-13T12:32:37.751Z'
 
     unix> make btest
     unix> ./btest [optional cmd line args]
-
+    
     unix> make clean
     unix> make btest
 
@@ -34,12 +27,12 @@ modified: '2022-05-13T12:32:37.751Z'
 ～(x & y) 同时为1的位，变为0，不同的位变为1.
 
 ### 2.tmin
- 
+
  > tmin - return minimum two's complement integer 
    Legal ops: ! ~ & ^ | + << >>
    Max ops: 4
    Rating: 1
- 
+
     int tmin(void) {
       return 1 << 31;
     }
@@ -57,7 +50,7 @@ modified: '2022-05-13T12:32:37.751Z'
     }
 
 ### 4.allOddBits 
- 
+
  > allOddBits - return 1 if all odd-numbered bits in word set to 1
     where bits are numbered from 0 (least significant) to 31 (most significant)
     Examples allOddBits(0xFFFFFFFD) = 0, allOddBits(0xAAAAAAAA) = 1
@@ -78,7 +71,7 @@ modified: '2022-05-13T12:32:37.751Z'
     Legal ops: ! ~ & ^ | + << >>
     Max ops: 5
     Rating: 2
- 
+
     int negate(int x) {
       return ~x + 1;
     }
@@ -92,11 +85,11 @@ modified: '2022-05-13T12:32:37.751Z'
     Legal ops: ! ~ & ^ | + << >>
     Max ops: 15
     Rating: 3
- 
+
     int isAsciiDigit(int x) {
       int diff1 = ((x + ~0x30 + 1) >> 31) & 1;//x - 0x30 < 0, diff1 = 1, return 0.
       int diff2 = ((0x39 + ~x + 1) >> 31) & 1;//0x39 - x < 0, diff2 = 1, return 0.
-
+    
       return !diff1 & !diff2;
     }
 
@@ -107,7 +100,7 @@ modified: '2022-05-13T12:32:37.751Z'
     Legal ops: ! ~ & ^ | + << >>
     Max ops: 16
     Rating: 3
- 
+
     int conditional(int x, int y, int z) {
       int res;
       ((x && (res = y)) || (res = z));
@@ -121,11 +114,11 @@ modified: '2022-05-13T12:32:37.751Z'
     Legal ops: ! ~ & ^ | + << >>
     Max ops: 24
     Rating: 3
- 
+
     int isLessOrEqual(int x, int y) {
       int x_sign = (x >> 31) & 1;
       int y_sign = (y >> 31) & 1;
-
+    
       //y + ~x + 1 = y - x
       int res = ((y + ~x + 1) >> 31) & 1;
       //if x < 0, y > 0, return 1, x_sign & ~y_sign = 1
@@ -165,35 +158,35 @@ modified: '2022-05-13T12:32:37.751Z'
    Legal ops: ! ~ & ^ | + << >>
    Max ops: 90
    Rating: 4
- 
+
     //正数根据最高位的1进行判断， 负数根据最高位的0进行判断。如果是负数则取反，也通过最高位的1进行判断。
     // 12 = 0x0..01100, -5 = 0x1...101.
     int howManyBits(int x) {
       //如果x >= 0, 不变。如果x < 0, 按位取反。
       x = x ^ (x >> 31);
-
+    
       int b16, b8, b4, b2, b1, b0;
       b16 = !!(x >> 16) << 4;//判断高16位是否有1，有的话x最少为16位。
       x >> b16;
-
+    
       b8 = !!(x >> 8) << 3;//判断剩余的高8位是否有1， 有的话x最少为(16 + 8 = 24)位
       x >> b8;
-
+    
       b4 = !!(x >> 4) << 2;//判断剩余的高4位是否有1， 有的话x最少为(16 + 8 + 4= 28)位
       x >> b4;
-
+    
       b2 = !!(x >> 2) << 1;//判断剩余的高2位是否有1， 有的话x最少为(16 + 8 + 4 + 2= 30)位
       x >> b2;
-
+    
       b1 = !!(x >> 1);//判断剩余的高1位是否有1， 有的话x最少为(16 + 8 + 4 + 2 + 1= 31)位
       x >> b1;
-
+    
       b0 = x;
       return b0 + b1 + b2 + b4 + b8 + b16 + 1;//最高位1的位数 + 符号位。
     }
 
 ### 11.floatScale2(homework 2.94)
-   
+
  > floatScale2 - Return bit-level equivalent of expression 2*f for
     floating point argument f.
     Both the argument and result are passed as unsigned int's, but
@@ -208,7 +201,7 @@ modified: '2022-05-13T12:32:37.751Z'
       unsigned sign = uf >> 31;
       unsigned exp = (uf >> 23) & 0xff;
       unsigned frac = uf & 0x7fffff;
-
+    
       if(exp == 0xff)
         return uf;
       
@@ -224,7 +217,7 @@ modified: '2022-05-13T12:32:37.751Z'
     }
 
 ### 12.floatFloat2Int(homework 2.96)
- 
+
  > floatFloat2Int - Return bit-level equivalent of expression (int) f
     for floating point argument f.
     Argument is passed as unsigned int, but
@@ -235,12 +228,12 @@ modified: '2022-05-13T12:32:37.751Z'
     Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
     Max ops: 30
     Rating: 4
- 
+
     int floatFloat2Int(unsigned uf) {
       unsigned sign = uf >> 31;
       unsigned exp = (uf >> 23) & 0xff;
       unsigned frac = uf & 0x7fffff;
-
+    
       int bias = 0x7f;
       int E, M, res;
       if(exp >= 0 && exp < bias){//小于1的数
@@ -267,20 +260,20 @@ modified: '2022-05-13T12:32:37.751Z'
     representation as the single-precision floating-point number 2.0^x.
     If the result is too small to be represented as a denorm, return
     0. If too large, return +INF.
-    Legal ops: Any integer/unsigned operations incl. ||, &&. Also if, while 
-    Max ops: 30 
-    Rating: 4
- 
+      Legal ops: Any integer/unsigned operations incl. ||, &&. Also if, while 
+      Max ops: 30 
+      Rating: 4
+
 
     unsigned floatPower2(int x) {
         unsigned sign = 0;
         unsigned exp;
         unsigned frac;
-
+    
         int min_exp = -23 - 126;//正最小非规格化数 2^-23 * 2^-126;
         int max_exp = 127;//正最大规格化数 (2-w) * 2^127;
         int bias = 0x7f;
-
+    
         if(x < min_exp)
           return 0;
         else if(x > max_exp){

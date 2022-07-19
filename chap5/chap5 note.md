@@ -1,11 +1,3 @@
----
-attachments: [Clipboard_2022-06-05-19-19-15.png, Clipboard_2022-06-05-19-26-01.png, Clipboard_2022-06-06-11-37-08.png, Clipboard_2022-06-07-16-37-02.png, Clipboard_2022-06-07-16-44-13.png, Clipboard_2022-06-07-16-51-26.png, Clipboard_2022-06-07-16-53-10.png, Clipboard_2022-06-07-17-16-06.png]
-tags: [csapp/10]
-title: chap5 note
-created: '2022-06-05T10:00:46.457Z'
-modified: '2022-06-09T01:20:56.986Z'
----
-
 # chap5 note
 
 [B站课程视频地址](https://www.bilibili.com/video/BV1iW411d7hd?p=10)
@@ -84,7 +76,7 @@ C.虽然5.5有两个乘法运算，但只有一个出现在关键路径上。
       long limit = length - 4;
       data_t *data = get_vec_start(v);
       data_t acc = IDENT;
-
+    
       for(int i = 0; i < limit; i += 5){
         acc = acc OP data[i] OP data[i + 1] OP data[i + 2] OP data[i + 3] OP data[i + 4];
       }
@@ -161,7 +153,6 @@ psum1:
             p[i] = temp; 
         }
     }
-
 
 
 
